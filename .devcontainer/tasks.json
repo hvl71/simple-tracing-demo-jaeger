@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Run FastAPI",
+        "type": "shell",
+        "command": "docker-compose up",
+        "problemMatcher": [],
+        "detail": "Runs the FastAPI application using Docker Compose"
+      }
+    ]
+  }
+  
