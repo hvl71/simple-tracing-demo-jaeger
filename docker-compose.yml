@@ -6,6 +6,24 @@ services:
       - "8000:8000"
     depends_on:
       - jaeger
+      - service1
+
+  service1:
+    build:
+      context: ./service1
+    ports:
+      - "8001:8001"
+    depends_on:
+      - jaeger
+      - service2
+
+  service2:
+    build:
+      context: ./service2
+    ports:
+      - "8002:8002"
+    depends_on:
+      - jaeger
 
   jaeger:
     image: jaegertracing/all-in-one:1.25

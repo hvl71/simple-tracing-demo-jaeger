@@ -1,18 +1,17 @@
 from fastapi import FastAPI
-import requests
 from opentelemetry import trace
-from opentelemetry.exporter.jaeger.thrift import JaegerExporter
 from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.jaeger.thrift import JaegerExporter
 
 app = FastAPI()
 
 # Configure tracing
 trace.set_tracer_provider(
     TracerProvider(
-        resource=Resource.create({"service.name": "fastapi-app"})
+        resource=Resource.create({"service.name": "service2"})
     )
 )
 jaeger_exporter = JaegerExporter(
@@ -24,13 +23,7 @@ FastAPIInstrumentor.instrument_app(app)
 
 tracer = trace.get_tracer(__name__)
 
-@app.get("/")
-def read_root():
-    with tracer.start_as_current_span("root-endpoint"):
-        return {"message": "Hello, World!"}
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: str = None):
-    with tracer.start_as_current_span("item-endpoint"):
-        response = requests.get(f"http://service1:8001/process/{item_id}")
-        return response.json()
+@app.get("/finalize/{item_id}")
+def finalize_item(item_id: int):
+    with tracer.start_as_current_span("service2-finalize"):
+        return {"item_id": item_id, "status": "finalized"}

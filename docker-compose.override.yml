@@ -4,3 +4,13 @@ services:
     volumes:
       - .:/app
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  service1:
+    volumes:
+      - ./service1:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8001 --reload
+
+  service2:
+    volumes:
+      - ./service2:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8002 --reload
