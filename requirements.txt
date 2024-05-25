@@ -1,0 +1,5 @@
+fastapi
+uvicorn[standard]
+opentelemetry-sdk
+opentelemetry-exporter-jaeger
+opentelemetry-instrumentation-fastapi

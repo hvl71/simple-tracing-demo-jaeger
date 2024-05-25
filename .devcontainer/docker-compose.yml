@@ -1,0 +1,17 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - jaeger
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.25
+    ports:
+      - "6831:6831/udp"
+      - "16686:16686"
