@@ -1,4 +1,5 @@
 fastapi
+requests
 opentelemetry-sdk
 opentelemetry-exporter-jaeger
 opentelemetry-instrumentation-fastapi
